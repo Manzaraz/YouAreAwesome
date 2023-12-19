@@ -10,11 +10,6 @@ import SwiftUI
 struct ContentView: View {
     @State private var messageString = ""
     @State private var imageString = ""
-    @State private var isAwesome = false
-    @State private var imageNumber = 0
-    @State private var messageNumber = 0
-    var messages = ["You Are Awesome!", "You Are Great!", "Fabolous? That's You!", "You Are Fantastic"]
-
     
     var body: some View {
         VStack {
@@ -39,18 +34,15 @@ struct ContentView: View {
             Spacer()
             
             Button("Show Message") {
-                imageString = "image\(imageNumber)"
-                messageString = messages[messageNumber]
-                imageNumber = imageNumber >= 9 ? 0 : imageNumber + 1
-                messageNumber = messageNumber >= messages.count - 1 ? 0 : messageNumber + 1
-                //TODO: DO SOMETHING
-                isAwesome.toggle()
+                let messages = ["You Are Awesome!", "You Are Great!", "Fabolous? That's You!", "You Are Fantastic"]
+                
+                imageString = "image\(Int.random(in: 0...9))"
+                messageString = messages[Int.random(in: 1...messages.count - 1)]
             }
             .buttonStyle(.borderedProminent)
         }
         .padding(/*@START_MENU_TOKEN@*/EdgeInsets()/*@END_MENU_TOKEN@*/)
     }
-    
 }
 
 #Preview {
