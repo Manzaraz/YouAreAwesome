@@ -9,27 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var messageString = ""
+    @State private var isAwesome = false
     
     var body: some View {
         VStack {
             
             Spacer()
-
-            Image(systemName: "speaker.wave.2", variableValue: 0.51)
-                .resizable()
-                .scaledToFit()
-                .symbolRenderingMode(.multicolor)
-                .padding()
-                .background(Color(hue: 0.521, saturation: 0.299, brightness: 0.958))
-                .clipShape(RoundedRectangle(cornerRadius: 30))
-                .shadow(color: .gray, radius: 30, x: 20, y: 20)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 30)
-                        .stroke(.teal, lineWidth: 5)
-                )
-                .padding()
             
-            Text("Namaste")
+            Text(messageString)
                 .font(.largeTitle)
                 .fontWeight(.heavy)
                 .minimumScaleFactor(0.5)
@@ -38,28 +25,16 @@ struct ContentView: View {
                 .frame(height: 150)
                 .frame(maxWidth: .infinity)
                 .padding()
-
             
             Spacer()
             
-            HStack {
-                Button("Awesome") {
-                    // This is the action performed when the button is pressed
-                    messageString = "You Are Awesome!"
-                }
-                .buttonStyle(.borderedProminent)
-                
-                Spacer()
-                
-                Button("Great") {
-                    // This is the action performed when the button is pressed
-                    messageString = "You Are Great!"
-                }
-                .buttonStyle(.borderedProminent)
-                
+            Button("Show Message") {
+                messageString = !isAwesome ? "You Are Awesome!" : "You Are Great!"
+                isAwesome.toggle()
             }
-            .padding()
+            .buttonStyle(.borderedProminent)
         }
+        .padding(/*@START_MENU_TOKEN@*/EdgeInsets()/*@END_MENU_TOKEN@*/)
     }
     
 }
