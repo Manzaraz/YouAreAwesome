@@ -15,6 +15,7 @@ struct ContentView: View {
     @State private var lastImageNumber = -1
     @State private var lastSoundNumber = -1
     @State private var audioPlayer: AVAudioPlayer!
+    @State private var soundIsOn = true
     
     var body: some View {
         VStack {
@@ -39,27 +40,42 @@ struct ContentView: View {
             
             Spacer()
             
-            Button("Show Message") {
-                let messages = ["You Are Awesome!",
-                                "You Are Great!",
-                                "Fabolous? That's You!",
-                                "You Are Fantastic"]
+            HStack {
+                Text("Sound \(soundIsOn ? "On" : "Off"):")
+                Toggle("", isOn: $soundIsOn)
+                    .labelsHidden()
+                    .onChange(of: soundIsOn) {
+                        if audioPlayer != nil && audioPlayer.isPlaying {
+                            audioPlayer.stop()
+                            
+                        }
+                    }
                 
-                lastMessageNumber = nonRepeatingRandom(lastNumber: lastMessageNumber, upperBounds: messages.count-1)
-                messageString = messages[lastMessageNumber]
+                Spacer()
                 
-                lastImageNumber = nonRepeatingRandom(lastNumber: lastImageNumber, upperBounds: 9)
-                imageName = "image\(lastImageNumber)"
-                
-                lastSoundNumber = nonRepeatingRandom(lastNumber: lastSoundNumber, upperBounds: 5)
-                print(lastSoundNumber)
-                
-                playSound(soundName: "sound\(lastSoundNumber)")
-                
+                Button("Show Message") {
+                    let messages = ["You Are Awesome!",
+                                    "You Are Great!",
+                                    "Fabolous? That's You!",
+                                    "You Are Fantastic"]
+                    
+                    lastMessageNumber = nonRepeatingRandom(lastNumber: lastMessageNumber, upperBounds: messages.count-1)
+                    messageString = messages[lastMessageNumber]
+                    
+                    lastImageNumber = nonRepeatingRandom(lastNumber: lastImageNumber, upperBounds: 9)
+                    imageName = "image\(lastImageNumber)"
+                    
+                    lastSoundNumber = nonRepeatingRandom(lastNumber: lastSoundNumber, upperBounds: 5)
+                    
+                    if soundIsOn {
+                        playSound(soundName: "sound\(lastSoundNumber)")
+                    }
+                    
+                }
+                .buttonStyle(.borderedProminent)
             }
-            .buttonStyle(.borderedProminent)
         }
-        .padding(/*@START_MENU_TOKEN@*/EdgeInsets()/*@END_MENU_TOKEN@*/)
+        .padding()
     }
     
     func nonRepeatingRandom(lastNumber: Int, upperBounds: Int) -> Int {
