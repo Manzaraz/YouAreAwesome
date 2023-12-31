@@ -17,6 +17,7 @@ struct ContentView: View {
     @State private var audioPlayer: AVAudioPlayer!
     @State private var soundIsOn = true
     
+    @available(iOS 17.0, *)
     var body: some View {
         VStack {
             
@@ -29,6 +30,8 @@ struct ContentView: View {
                 .frame(height: 150)
                 .frame(maxWidth: .infinity)
                 .padding()
+//                .animation(.default, value: messageString)
+                .animation(.easeIn(duration: 0.15), value: messageString)
             
             Spacer()
             
@@ -50,6 +53,7 @@ struct ContentView: View {
                             
                         }
                     }
+                    
                 
                 Spacer()
                 
@@ -73,7 +77,9 @@ struct ContentView: View {
                     
                 }
                 .buttonStyle(.borderedProminent)
+                
             }
+            .tint(.accentColor)
         }
         .padding()
     }
